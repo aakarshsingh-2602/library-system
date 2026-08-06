@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <fstream> // Required for reading and writing files
+#include <fstream>
 
 using namespace std;
 
@@ -21,13 +21,13 @@ public:
     }
 };
 
-// Library Class
+
 class Library {
 private:
     vector<Book> books;
-    const string filename = "library_data.txt"; // The text file where data lives
+    const string filename = "library_data.txt";
 
-    // Private helper method to save the vector to a text file
+  
     void saveToFile() {
         ofstream outFile(filename);
         if (!outFile) {
@@ -36,7 +36,7 @@ private:
         }
         
         for (const auto& book : books) {
-            // Write each book's data on a new line
+          
             outFile << book.id << "\n"
                     << book.isIssued << "\n"
                     << book.title << "\n"
@@ -45,11 +45,11 @@ private:
         outFile.close();
     }
 
-    // Private helper method to load data when the program starts
+  
     void loadFromFile() {
         ifstream inFile(filename);
         if (!inFile) {
-            // It's normal for the file to not exist on the very first run
+           
             return; 
         }
 
@@ -57,13 +57,13 @@ private:
         bool isIssued;
         string title, author;
 
-        // Read the file line by line
+       
         while (inFile >> id >> isIssued) {
-            inFile.ignore(); // Clear the newline character left in the buffer
+            inFile.ignore(); 
             getline(inFile, title);
             getline(inFile, author);
 
-            // Reconstruct the book and add it to the vector
+         
             Book loadedBook(id, title, author);
             loadedBook.isIssued = isIssued; 
             books.push_back(loadedBook);
@@ -72,7 +72,7 @@ private:
     }
 
 public:
-    // Constructor that automatically loads data when the Library is created
+   
     Library() {
         loadFromFile();
     }
@@ -80,7 +80,7 @@ public:
     void addBook(int id, string title, string author) {
         Book newBook(id, title, author);
         books.push_back(newBook);
-        saveToFile(); // Save immediately after adding
+        saveToFile();
         cout << "\n[SUCCESS] Book added successfully!\n";
     }
 
@@ -103,7 +103,7 @@ public:
             if (book.id == id) {
                 if (!book.isIssued) {
                     book.isIssued = true;
-                    saveToFile(); // Save state change
+                    saveToFile();
                     cout << "\n[SUCCESS] Book issued successfully.\n";
                 } else {
                     cout << "\n[WARNING] Book is already issued.\n";
@@ -119,7 +119,7 @@ public:
             if (book.id == id) {
                 if (book.isIssued) {
                     book.isIssued = false;
-                    saveToFile(); // Save state change
+                    saveToFile(); 
                     cout << "\n[SUCCESS] Book returned successfully.\n";
                 } else {
                     cout << "\n[WARNING] This book was not issued.\n";
